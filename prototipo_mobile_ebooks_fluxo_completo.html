@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GoWorld E-books — Fluxo Completo</title>
+<style>
+:root{
+  --bg:#f4f7fb;--card:#fff;--text:#17212b;--muted:#697586;--line:#e3e9ef;
+  --primary:#173b6c;--primary2:#26558c;--soft:#edf3fb;
+  --success:#18764b;--successbg:#eaf7f0;
+  --warn:#8a5a00;--warnbg:#fff4dc;
+  --danger:#a13d3d;--dangerbg:#fff0f0;
+  --shadow:0 12px 32px rgba(20,42,74,.08);--radius:18px
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);background:linear-gradient(180deg,#edf3f9 0,#f7f8fb 260px)
+}
+.app{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:95px}
+header{padding:24px 18px 16px}
+.brand{font-size:12px;font-weight:900;letter-spacing:.14em;color:var(--primary);text-transform:uppercase}
+h1{font-size:28px;line-height:1.07;margin:8px 0 7px;letter-spacing:-.03em}
+.subtitle{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+main{padding:0 14px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;margin-bottom:12px;box-shadow:var(--shadow)
+}
+.hidden{display:none!important}
+.section-title{font-size:14px;font-weight:850;margin:0 0 11px}
+.section-sub{font-size:11px;color:var(--muted);line-height:1.45;margin:-4px 0 11px}
+.label{font-size:11px;font-weight:800;color:#465365;margin:14px 0 6px}
+.label:first-child{margin-top:0}
+select,input,textarea{
+  width:100%;border:1px solid #dbe3eb;border-radius:12px;background:#fff;padding:12px 13px;
+  font-size:13px;color:var(--text);outline:none
+}
+textarea{min-height:78px;resize:vertical}
+select:focus,input:focus,textarea:focus{border-color:#9fb6d2;box-shadow:0 0 0 3px #edf3fb}
+button{
+  width:100%;border:0;border-radius:13px;padding:13px 14px;font-size:13px;font-weight:850;cursor:pointer
+}
+.primary{background:var(--primary);color:#fff;margin-top:13px}
+.secondary{background:var(--soft);color:var(--primary);margin-top:8px}
+.outline{background:#fff;color:var(--text);border:1px solid var(--line);margin-top:8px}
+.dangerbtn{background:var(--dangerbg);color:var(--danger);margin-top:8px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{
+  width:auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 10px;
+  font-size:11px;font-weight:750;color:#596576;cursor:pointer
+}
+.chip.active{background:var(--soft);border-color:#b7cae2;color:var(--primary)}
+.info,.callout,.successbox,.dangerbox{
+  border-radius:14px;padding:12px;margin-top:12px;font-size:11px;line-height:1.45
+}
+.info{background:#f8fafc;border:1px solid var(--line);color:#5f6b79}
+.callout{background:var(--warnbg);border:1px solid #efd8a6;color:#6f582d}
+.callout strong{display:block;color:var(--warn);font-size:11px;margin-bottom:4px}
+.successbox{background:var(--successbg);border:1px solid #cde7d8;color:#507362}
+.successbox strong{display:block;color:var(--success);margin-bottom:4px}
+.dangerbox{background:var(--dangerbg);border:1px solid #eccccc;color:#775050}
+.dangerbox strong{display:block;color:var(--danger);margin-bottom:4px}
+.project-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850}
+.project-title{font-size:19px;font-weight:850;margin:4px 0 0}
+.pill{font-size:10px;font-weight:850;padding:6px 8px;border-radius:999px;background:var(--soft);color:var(--primary);white-space:nowrap}
+.progress{height:8px;background:#edf0f4;border-radius:999px;overflow:hidden;margin-top:14px}
+.progress span{display:block;height:100%;width:8%;background:var(--primary);border-radius:inherit;transition:.25s}
+.progress-meta{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.summary-item{border:1px solid var(--line);border-radius:12px;padding:10px}
+.summary-item span{display:block;font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:800;margin-bottom:4px}
+.summary-item strong{font-size:11px;line-height:1.35}
+.stepbar{display:flex;gap:7px;overflow:auto;scrollbar-width:none;padding:2px 0}
+.stepbar::-webkit-scrollbar{display:none}
+.step{min-width:110px;border:1px solid var(--line);border-radius:13px;padding:10px;background:#fff}
+.step strong{display:block;font-size:11px;margin-bottom:4px}
+.step span{font-size:9px;color:var(--muted)}
+.step.active{background:#f7faff;border-color:#b7c9df}
+.step.done{background:#f7fcf9;border-color:#cde7d8}
+.step.done strong{color:var(--success)}
+.step.locked{opacity:.45}
+.mode,.option-card{
+  border:1px solid var(--line);border-radius:13px;padding:12px;background:#fff;cursor:pointer;margin-bottom:8px
+}
+.mode.active,.option-card.active{border-color:#adc3dd;background:#f7faff}
+.mode strong,.option-card strong{display:block;font-size:12px;margin-bottom:4px}
+.mode small,.option-card small{display:block;color:var(--muted);font-size:10px;line-height:1.4}
+.list{padding:0;margin:0;list-style:none}
+.list li{
+  padding:10px 0;border-top:1px solid var(--line);font-size:12px;display:flex;
+  justify-content:space-between;gap:10px;align-items:flex-start
+}
+.list li:first-child{border-top:0}
+.list small{color:var(--muted);font-size:10px}
+.ok{color:var(--success)!important;font-weight:850}
+.warn{color:var(--warn)!important;font-weight:850}
+.review-item{
+  border:1px solid var(--line);border-radius:13px;padding:11px;margin-top:8px
+}
+.review-top{display:flex;justify-content:space-between;gap:8px}
+.review-title{font-size:11px;font-weight:760;line-height:1.4}
+.status{font-size:9px;font-weight:850;padding:5px 7px;border-radius:999px;white-space:nowrap}
+.status.ok{background:var(--successbg);color:var(--success)!important}
+.status.warn{background:var(--warnbg);color:var(--warn)!important}
+.status.neutral{background:#f0f2f5;color:#657180!important}
+.outline-list{margin:0;padding:0;list-style:none;counter-reset:item}
+.outline-list li{
+  display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);
+  font-size:12px;font-weight:650;line-height:1.3
+}
+.outline-list li:first-child{border-top:0}
+.outline-list li::before{
+  counter-increment:item;content:counter(item);width:23px;height:23px;flex:none;
+  border-radius:7px;display:flex;align-items:center;justify-content:center;background:#eef3f8;
+  color:var(--primary);font-size:10px;font-weight:850
+}
+.palette{display:flex;gap:8px;margin-top:9px}
+.swatch{height:44px;flex:1;border-radius:10px;border:1px solid rgba(0,0,0,.06)}
+.sw1{background:#173b6c}.sw2{background:#e8eef5}.sw3{background:#c99b5a}.sw4{background:#f8f6f1}
+.preview{
+  border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#fff;margin-top:10px
+}
+.preview-cover{
+  padding:22px 18px;background:linear-gradient(135deg,#173b6c,#244f86);color:#fff;min-height:180px;
+  display:flex;flex-direction:column;justify-content:flex-end
+}
+.preview-cover small{font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.preview-cover h3{font-size:25px;line-height:1.05;margin:8px 0 4px}
+.preview-cover p{font-size:11px;margin:0;opacity:.82}
+.preview-body{padding:14px}
+.preview-body h4{font-size:13px;margin:0 0 6px}
+.preview-body p{font-size:10px;line-height:1.5;color:var(--muted);margin:0}
+.chapter-card{
+  border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px
+}
+.chapter-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.chapter-head strong{font-size:12px}
+.chapter-card p{font-size:10px;color:var(--muted);line-height:1.45;margin:6px 0 0}
+.score{
+  display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+  border-top:1px solid var(--line);padding:10px 0
+}
+.score:first-of-type{border-top:0}
+.score span{font-size:11px}
+.score strong{font-size:12px}
+.bigscore{text-align:center;padding:8px 0 14px}
+.bigscore strong{font-size:38px;color:var(--success);display:block;line-height:1}
+.bigscore span{font-size:10px;color:var(--muted)}
+.files{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.file{
+  border:1px solid var(--line);border-radius:13px;padding:12px;text-align:center
+}
+.file b{font-size:20px;display:block;margin-bottom:5px;color:var(--primary)}
+.file strong{display:block;font-size:10px}
+.file small{font-size:9px;color:var(--muted)}
+.version{
+  padding:12px;border:1px solid #cde7d8;background:#f7fcf9;border-radius:14px;margin-top:10px
+}
+.version strong{font-size:13px;color:var(--success)}
+.version div{font-size:10px;color:#5f7468;margin-top:4px}
+.bottom{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(480px,100%);
+  background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);
+  z-index:20
+}
+.nav{text-align:center;font-size:10px;color:var(--muted);font-weight:750}
+.nav b{display:block;margin:auto auto 3px;width:24px;height:24px;line-height:24px;border-radius:8px;background:#f1f3f6}
+.nav.active{color:var(--primary)}.nav.active b{background:var(--soft);color:var(--primary)}
+.demo{text-align:center;font-size:10px;color:#8a94a2;padding:6px 12px 20px}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:82px;width:min(430px,calc(100% - 28px));
+  background:#17212b;color:#fff;border-radius:13px;padding:11px 13px;font-size:11px;z-index:50;
+  opacity:0;pointer-events:none;transition:.2s
+}
+.toast.show{opacity:1}
+@media(min-width:481px){
+  .app{margin-top:24px;background:var(--bg);box-shadow:0 25px 80px rgba(20,42,74,.12);border-radius:28px 28px 0 0;overflow:hidden}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">GoWorld E-books</div>
+  <h1 id="mainTitle">Criar novo e-book</h1>
+  <p class="subtitle" id="mainSubtitle">Demonstração completa do fluxo, da escolha do tema até a publicação.</p>
+</header>
+
+<main>
+<section class="card" id="startCard">
+  <div class="section-title">1. Como quer começar?</div>
+  <div class="chips" id="startMode">
+    <button class="chip active" onclick="setStartMode('preset',this)">Tema pré-definido</button>
+    <button class="chip" onclick="setStartMode('custom',this)">Tema novo</button>
+  </div>
+
+  <div id="presetFields">
+    <div class="label">País</div>
+    <select id="country" onchange="updateThemes()">
+      <option>Estados Unidos</option><option>Canadá</option><option>Portugal</option><option>Espanha</option>
+    </select>
+    <div class="label">Tema</div>
+    <select id="theme">
+      <option>Visto B1/B2 — Turismo e Negócios</option>
+      <option>DS-160 — Preenchimento Passo a Passo</option>
+      <option>Renovação do Visto Americano</option>
+      <option>Visto F-1 — Estudante</option>
+      <option>Visto J-1 — Intercâmbio</option>
+    </select>
+  </div>
+
+  <div id="customFields" class="hidden">
+    <div class="label">Tema</div>
+    <input id="customTheme" placeholder="Ex.: Visto D8 — Nômade Digital">
+    <div class="label">País / jurisdição</div>
+    <input id="customCountry" placeholder="Ex.: Portugal">
+  </div>
+
+  <div class="label">Tipo de produto</div>
+  <select id="productType">
+    <option>Guia operacional</option><option>Microguia</option><option>Checklist comentado</option><option>Kit de guias</option>
+  </select>
+
+  <div class="label">Público</div>
+  <select id="audience">
+    <option>Brasileiro solicitando pela primeira vez</option>
+    <option>Brasileiro renovando o visto</option>
+    <option>Estudante brasileiro</option>
+    <option>Família com dependentes</option>
+    <option>Profissional / trabalhador</option>
+  </select>
+
+  <div class="label">Profundidade</div>
+  <div class="chips">
+    <button class="chip" onclick="selectDepth(this)">Enxuto</button>
+    <button class="chip active" onclick="selectDepth(this)">Padrão</button>
+    <button class="chip" onclick="selectDepth(this)">Detalhado</button>
+  </div>
+
+  <div class="info">Taxas, requisitos e procedimentos não ficam fixos no sistema. Eles são extraídos das fontes aprovadas de cada projeto.</div>
+  <button class="primary" onclick="goSources()">Continuar</button>
+</section>
+
+<section class="card hidden" id="sourcesSetupCard">
+  <div class="section-title">2. Fontes do projeto</div>
+  <p class="section-sub">Escolha como o sistema será alimentado.</p>
+
+  <div class="mode active" onclick="selectSourceMode(this,'manual')">
+    <strong>Fontes manuais</strong><small>PDFs, leis, páginas salvas e documentos adicionados pela equipe.</small>
+  </div>
+  <div class="mode" onclick="selectSourceMode(this,'hybrid')">
+    <strong>Modo híbrido</strong><small>Fontes manuais + busca de lacunas quando necessário.</small>
+  </div>
+  <div class="mode" onclick="selectSourceMode(this,'online')">
+    <strong>Pesquisa online</strong><small>Busca multilíngue em legislação, órgãos oficiais e fontes contextuais.</small>
+  </div>
+
+  <div class="label">Conteúdo pré-carregado para demonstração</div>
+  <ul class="list">
+    <li><span>Department of State — Visitor Visa</span><small class="ok">oficial</small></li>
+    <li><span>Immigration and Nationality Act</span><small class="ok">legislação</small></li>
+    <li><span>Embaixada dos EUA no Brasil</span><small class="ok">oficial</small></li>
+    <li><span>Notícia sobre demanda consular</span><small>contexto</small></li>
+  </ul>
+
+  <button class="primary" onclick="createProject()">Criar projeto</button>
+  <button class="outline" onclick="back('sourcesSetupCard','startCard')">Voltar</button>
+</section>
+
+<section class="card hidden" id="projectCard">
+  <div class="project-head">
+    <div>
+      <div class="eyebrow">Projeto ativo</div>
+      <div class="project-title" id="projectTitle">Visto B1/B2 — Turismo e Negócios</div>
+    </div>
+    <div class="pill" id="projectStatus">Em produção</div>
+  </div>
+
+  <div class="progress"><span id="progressBar"></span></div>
+  <div class="progress-meta"><span id="progressStage">Etapa 1 de 9</span><span id="progressPercent">8%</span></div>
+
+  <div class="summary-grid">
+    <div class="summary-item"><span>Produto</span><strong id="sumProduct">Guia operacional</strong></div>
+    <div class="summary-item"><span>Público</span><strong id="sumAudience">Brasileiro solicitando pela primeira vez</strong></div>
+    <div class="summary-item"><span>Fontes</span><strong id="sumMode">Manual</strong></div>
+    <div class="summary-item"><span>Versão</span><strong>Rascunho 0.1</strong></div>
+  </div>
+</section>
+
+<section class="card hidden" id="flowCard">
+  <div class="section-title">Fluxo</div>
+  <div class="stepbar" id="stepbar">
+    <div class="step done" data-step="1"><strong>1. Tema</strong><span>Aprovado</span></div>
+    <div class="step active" data-step="2"><strong>2. Fontes</strong><span>Em andamento</span></div>
+    <div class="step locked" data-step="3"><strong>3. Pesquisa</strong><span>Pendente</span></div>
+    <div class="step locked" data-step="4"><strong>4. Validação</strong><span>Pendente</span></div>
+    <div class="step locked" data-step="5"><strong>5. Sumário</strong><span>Pendente</span></div>
+    <div class="step locked" data-step="6"><strong>6. Visual</strong><span>Pendente</span></div>
+    <div class="step locked" data-step="7"><strong>7. Redação</strong><span>Pendente</span></div>
+    <div class="step locked" data-step="8"><strong>8. Revisões</strong><span>Pendente</span></div>
+    <div class="step locked" data-step="9"><strong>9. Publicação</strong><span>Pendente</span></div>
+  </div>
+</section>
+
+<section class="card hidden stageCard" id="sourcesCard">
+  <div class="section-title">Fontes recebidas</div>
+  <ul class="list">
+    <li><span>3 fontes oficiais</span><small class="ok">aceitas</small></li>
+    <li><span>1 legislação</span><small class="ok">aceita</small></li>
+    <li><span>1 notícia contextual</span><small>contexto</small></li>
+    <li><span>0 relatos usados como regra</span><small class="ok">correto</small></li>
+  </ul>
+  <div class="successbox"><strong>Ingestão concluída</strong>Os arquivos foram classificados e estão prontos para extração.</div>
+  <button class="primary" onclick="startResearch()">Iniciar pesquisa</button>
+</section>
+
+<section class="card hidden stageCard" id="researchCard">
+  <div class="section-title">Pesquisa e extração</div>
+  <p class="section-sub">O sistema transformou o tema em perguntas e procurou respostas apenas nas fontes aceitas.</p>
+  <ul class="list">
+    <li><span>Finalidade da categoria</span><small class="ok">respondida</small></li>
+    <li><span>Formulário aplicável</span><small class="ok">respondida</small></li>
+    <li><span>Taxa consular</span><small class="ok">respondida</small></li>
+    <li><span>Entrevista</span><small class="ok">respondida</small></li>
+    <li><span>Documento adicional de vínculo</span><small class="warn">parcial</small></li>
+  </ul>
+  <div class="callout"><strong>1 lacuna detectada</strong>Uma recomendação prática não aparece como exigência oficial. O sistema não a transformará em requisito.</div>
+  <button class="primary" onclick="goValidation()">Revisar base factual</button>
+</section>
+
+<section class="card hidden stageCard" id="validationCard">
+  <div class="section-title">Validação humana</div>
+
+  <div class="review-item">
+    <div class="review-top">
+      <div class="review-title">B1/B2 pode abranger determinadas atividades temporárias de negócios e turismo.</div>
+      <span class="status ok">Validado</span>
+    </div>
+    <small>Fonte: Department of State</small>
+  </div>
+
+  <div class="review-item">
+    <div class="review-top">
+      <div class="review-title">A taxa vigente deve ser confirmada na fonte oficial antes da publicação.</div>
+      <span class="status ok">Validado</span>
+    </div>
+    <small>Classificação: dado volátil</small>
+  </div>
+
+  <div class="review-item">
+    <div class="review-top">
+      <div class="review-title">Levar determinado documento extra para demonstrar vínculo.</div>
+      <span class="status warn">Revisar</span>
+    </div>
+    <small>Tratamento sugerido: boa prática, não requisito oficial.</small>
+  </div>
+
+  <button class="primary" onclick="approveFacts()">Aprovar base factual com ajuste</button>
+  <button class="outline" onclick="toast('Na aplicação real, você poderia editar, rejeitar ou adicionar novas fontes.')">Editar itens</button>
+</section>
+
+<section class="card hidden stageCard" id="outlineCard">
+  <div class="section-title">Sumário sugerido</div>
+  <ol class="outline-list">
+    <li>Este visto é para quem?</li>
+    <li>Antes de começar</li>
+    <li>Documentos e informações necessárias</li>
+    <li>Passo a passo da solicitação</li>
+    <li>Entrevista consular</li>
+    <li>Erros comuns</li>
+    <li>Depois da decisão</li>
+    <li>Este guia é suficiente para o meu caso?</li>
+    <li>Checklist final e fontes</li>
+  </ol>
+  <button class="primary" onclick="approveOutline()">Aprovar sumário</button>
+  <button class="secondary" onclick="toast('Simulação: aqui seria possível reorganizar, incluir ou excluir capítulos.')">Editar estrutura</button>
+</section>
+
+<section class="card hidden stageCard" id="visualCard">
+  <div class="section-title">Identidade visual</div>
+  <p class="section-sub">O sistema propõe uma direção visual relacionada ao público e ao tema. A decisão é humana.</p>
+
+  <div class="label">Estilo</div>
+  <div class="chips">
+    <button class="chip active" onclick="visualChoice(this)">Editorial profissional</button>
+    <button class="chip" onclick="visualChoice(this)">Institucional</button>
+    <button class="chip" onclick="visualChoice(this)">Minimalista</button>
+  </div>
+
+  <div class="label">Paleta sugerida</div>
+  <div class="palette">
+    <div class="swatch sw1"></div><div class="swatch sw2"></div><div class="swatch sw3"></div><div class="swatch sw4"></div>
+  </div>
+
+  <div class="preview">
+    <div class="preview-cover">
+      <small>GoWorld · Guia prático</small>
+      <h3>Visto B1/B2</h3>
+      <p>Turismo e negócios nos Estados Unidos</p>
+    </div>
+    <div class="preview-body">
+      <h4>Antes de começar</h4>
+      <p>Este guia organiza as etapas de uma solicitação simples e indica quando uma análise individual pode ser necessária.</p>
+    </div>
+  </div>
+
+  <button class="primary" onclick="approveVisual()">Aprovar identidade visual</button>
+  <button class="outline" onclick="toast('Simulação: aqui poderia alterar capa, tipografia, paleta e estilo.')">Solicitar ajustes</button>
+</section>
+
+<section class="card hidden stageCard" id="draftCard">
+  <div class="section-title">Redação do e-book</div>
+  <p class="section-sub">A redação é feita capítulo por capítulo usando somente a base factual aprovada.</p>
+
+  <div class="chapter-card">
+    <div class="chapter-head"><strong>1. Este visto é para quem?</strong><span class="status ok">Pronto</span></div>
+    <p>Explicação sucinta da finalidade da categoria e situações normalmente compatíveis com ela.</p>
+  </div>
+  <div class="chapter-card">
+    <div class="chapter-head"><strong>2. Antes de começar</strong><span class="status ok">Pronto</span></div>
+    <p>Dados, documentos e informações que o leitor deve reunir antes de iniciar.</p>
+  </div>
+  <div class="chapter-card">
+    <div class="chapter-head"><strong>3. Passo a passo</strong><span class="status neutral">Gerando</span></div>
+    <p>Formulário, pagamento, agendamento e preparação para as próximas etapas.</p>
+  </div>
+
+  <button class="primary" onclick="completeDraft()">Concluir redação simulada</button>
+</section>
+
+<section class="card hidden stageCard" id="reviewCard">
+  <div class="section-title">Revisões automáticas</div>
+
+  <div class="review-item">
+    <div class="review-top"><div class="review-title">Revisão factual</div><span class="status ok">Aprovada</span></div>
+    <small>42 afirmações verificadas contra Claims e Evidences.</small>
+  </div>
+  <div class="review-item">
+    <div class="review-top"><div class="review-title">Escopo e responsabilidade</div><span class="status ok">Aprovada</span></div>
+    <small>Nenhuma promessa de aprovação ou análise individual indevida.</small>
+  </div>
+  <div class="review-item">
+    <div class="review-top"><div class="review-title">Gramática</div><span class="status ok">Aprovada</span></div>
+    <small>Ortografia, concordância, regência e padronização revisadas.</small>
+  </div>
+  <div class="review-item">
+    <div class="review-top"><div class="review-title">Consistência global</div><span class="status ok">Aprovada</span></div>
+    <small>Siglas, termos, valores, links e nomes uniformizados.</small>
+  </div>
+
+  <div class="bigscore">
+    <strong>94</strong><span>score geral de qualidade / 100</span>
+  </div>
+
+  <button class="primary" onclick="generateFiles()">Gerar arquivos finais</button>
+</section>
+
+<section class="card hidden stageCard" id="filesCard">
+  <div class="section-title">Arquivos gerados</div>
+  <div class="files">
+    <div class="file"><b>MD</b><strong>Fonte editorial</strong><small>editável</small></div>
+    <div class="file"><b>HTML</b><strong>Versão diagramada</strong><small>base do PDF</small></div>
+    <div class="file"><b>PDF</b><strong>E-book final</strong><small>28 páginas</small></div>
+    <div class="file"><b>JSON</b><strong>Manifesto</strong><small>fontes e versão</small></div>
+  </div>
+
+  <div class="successbox"><strong>QA concluído</strong>Links, paginação, quebras e renderização foram verificados na simulação.</div>
+  <button class="primary" onclick="goFinalApproval()">Revisar para publicação</button>
+</section>
+
+<section class="card hidden stageCard" id="finalApprovalCard">
+  <div class="section-title">Validação final</div>
+  <ul class="list">
+    <li><span>Base factual</span><small class="ok">aprovada</small></li>
+    <li><span>Sumário</span><small class="ok">aprovado</small></li>
+    <li><span>Identidade visual</span><small class="ok">aprovada</small></li>
+    <li><span>Revisão factual</span><small class="ok">aprovada</small></li>
+    <li><span>Revisão gramatical</span><small class="ok">aprovada</small></li>
+    <li><span>QA do PDF</span><small class="ok">aprovado</small></li>
+  </ul>
+
+  <div class="callout"><strong>Última decisão humana</strong>Nenhum e-book é publicado automaticamente. A versão só é fechada após aprovação explícita.</div>
+
+  <button class="primary" onclick="publishBook()">Aprovar e publicar versão 1.0</button>
+  <button class="outline" onclick="toast('Simulação: você poderia voltar para corrigir qualquer etapa antes da publicação.')">Solicitar correção</button>
+</section>
+
+<section class="card hidden stageCard" id="publishedCard">
+  <div class="section-title">E-book publicado</div>
+
+  <div class="version">
+    <strong>Visto B1/B2 — versão 1.0</strong>
+    <div>Publicado em ambiente de demonstração · fontes e histórico preservados</div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-item"><span>Páginas</span><strong>28</strong></div>
+    <div class="summary-item"><span>Fontes</span><strong>8</strong></div>
+    <div class="summary-item"><span>Claims</span><strong>42</strong></div>
+    <div class="summary-item"><span>Score</span><strong>94/100</strong></div>
+  </div>
+
+  <div class="label">Histórico preservado</div>
+  <ul class="list">
+    <li><span>Fontes consultadas</span><small class="ok">salvas</small></li>
+    <li><span>Decisões humanas</span><small class="ok">salvas</small></li>
+    <li><span>Claims e evidências</span><small class="ok">salvos</small></li>
+    <li><span>Arquivos da versão 1.0</span><small class="ok">salvos</small></li>
+  </ul>
+
+  <button class="primary" onclick="toast('Simulação: aqui seria feito o download do PDF final.')">Baixar PDF</button>
+  <button class="secondary" onclick="toast('Simulação: este comando abriria uma revisão da versão 1.0 sem sobrescrever o original.')">Criar atualização futura</button>
+  <button class="outline" onclick="resetDemo()">Criar novo e-book</button>
+</section>
+
+<div class="demo">Todos os textos, números, fontes e resultados desta tela são simulados exclusivamente para demonstrar o funcionamento do sistema.</div>
+</main>
+
+<nav class="bottom">
+  <div class="nav active"><b>＋</b>Novo</div>
+  <div class="nav"><b>▣</b>Projetos</div>
+  <div class="nav"><b>⚙</b>Config.</div>
+</nav>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let startMode='preset';
+let sourceMode='manual';
+
+const themes={
+ 'Estados Unidos':['Visto B1/B2 — Turismo e Negócios','DS-160 — Preenchimento Passo a Passo','Renovação do Visto Americano','Visto F-1 — Estudante','Visto J-1 — Intercâmbio'],
+ 'Canadá':['Visitor Visa — Turismo','Study Permit — Estudos','Work Permit — Trabalho','Entrada no Canadá — Documentos'],
+ 'Portugal':['Visto D7 — Rendimentos Próprios','Visto D8 — Nômade Digital','Visto de Estudos','Visto para Atividade Profissional'],
+ 'Espanha':['Residência Não Lucrativa','Nômade Digital','Visto de Estudos','Visto de Trabalho']
+};
+
+function toast(msg){
+ const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+ setTimeout(()=>el.classList.remove('show'),2200);
+}
+function setStartMode(mode,el){
+ startMode=mode;
+ document.querySelectorAll('#startMode .chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+ document.getElementById('presetFields').classList.toggle('hidden',mode!=='preset');
+ document.getElementById('customFields').classList.toggle('hidden',mode!=='custom');
+}
+function updateThemes(){
+ const c=document.getElementById('country').value,t=document.getElementById('theme');t.innerHTML='';
+ themes[c].forEach(x=>{const o=document.createElement('option');o.textContent=x;t.appendChild(o)});
+}
+function selectDepth(el){el.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+function visualChoice(el){el.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+function selectSourceMode(el,mode){sourceMode=mode;document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+function back(from,to){document.getElementById(from).classList.add('hidden');document.getElementById(to).classList.remove('hidden');window.scrollTo({top:0})}
+function goSources(){
+ if(startMode==='custom'&&!document.getElementById('customTheme').value.trim()){alert('Digite o tema do novo e-book.');return}
+ document.getElementById('startCard').classList.add('hidden');
+ document.getElementById('sourcesSetupCard').classList.remove('hidden');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function createProject(){
+ let title=startMode==='preset'?document.getElementById('theme').value:document.getElementById('customTheme').value;
+ document.getElementById('sourcesSetupCard').classList.add('hidden');
+ ['projectCard','flowCard','sourcesCard'].forEach(id=>document.getElementById(id).classList.remove('hidden'));
+ document.getElementById('projectTitle').textContent=title;
+ document.getElementById('sumProduct').textContent=document.getElementById('productType').value;
+ document.getElementById('sumAudience').textContent=document.getElementById('audience').value;
+ document.getElementById('sumMode').textContent={manual:'Manual',hybrid:'Híbrido',online:'Online'}[sourceMode];
+ document.getElementById('mainTitle').textContent='Projeto em andamento';
+ document.getElementById('mainSubtitle').textContent='Avance pelas etapas e aprove os gates obrigatórios.';
+ setStage(2,15);
+ scrollStage('sourcesCard');
+}
+function setStage(step,percent){
+ document.querySelectorAll('.step').forEach((el,i)=>{
+   const n=i+1;
+   el.classList.remove('active','done','locked');
+   if(n<step){el.classList.add('done');el.querySelector('span').textContent='Concluído'}
+   else if(n===step){el.classList.add('active');el.querySelector('span').textContent='Em andamento'}
+   else{el.classList.add('locked');el.querySelector('span').textContent='Pendente'}
+ });
+ document.getElementById('progressBar').style.width=percent+'%';
+ document.getElementById('progressStage').textContent='Etapa '+step+' de 9';
+ document.getElementById('progressPercent').textContent=percent+'%';
+ const active=document.querySelector('.step.active');if(active)active.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+}
+function hideStages(){document.querySelectorAll('.stageCard').forEach(x=>x.classList.add('hidden'))}
+function showStage(id,step,percent){hideStages();document.getElementById(id).classList.remove('hidden');setStage(step,percent);scrollStage(id)}
+function scrollStage(id){setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:'smooth',block:'center'}),120)}
+function startResearch(){showStage('researchCard',3,27)}
+function goValidation(){showStage('validationCard',4,39)}
+function approveFacts(){toast('Base factual aprovada. Ajuste classificado como boa prática.');showStage('outlineCard',5,50)}
+function approveOutline(){toast('Sumário aprovado.');showStage('visualCard',6,61)}
+function approveVisual(){toast('Identidade visual aprovada.');showStage('draftCard',7,72)}
+function completeDraft(){
+ document.querySelectorAll('#draftCard .status').forEach(x=>{x.textContent='Pronto';x.classList.remove('neutral');x.classList.add('ok')});
+ toast('Redação concluída na simulação.');
+ setTimeout(()=>showStage('reviewCard',8,83),450);
+}
+function generateFiles(){
+ hideStages();document.getElementById('filesCard').classList.remove('hidden');setStage(8,89);scrollStage('filesCard');
+}
+function goFinalApproval(){showStage('finalApprovalCard',9,96)}
+function publishBook(){
+ hideStages();document.getElementById('publishedCard').classList.remove('hidden');
+ document.getElementById('progressBar').style.width='100%';
+ document.getElementById('progressStage').textContent='Publicado';
+ document.getElementById('progressPercent').textContent='100%';
+ document.getElementById('projectStatus').textContent='Publicado';
+ document.querySelectorAll('.step').forEach(el=>{el.classList.remove('active','locked');el.classList.add('done');el.querySelector('span').textContent='Concluído'});
+ toast('Versão 1.0 publicada.');
+ scrollStage('publishedCard');
+}
+function resetDemo(){location.reload()}
+</script>
+</body>
+</html>
